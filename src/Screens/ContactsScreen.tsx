@@ -1,20 +1,30 @@
 import React from "react";
-import { StyleSheet, FlatList, SafeAreaView, View } from "react-native";
+import {
+  StyleSheet,
+  FlatList,
+  SafeAreaView,
+  View,
+  Dimensions
+} from "react-native";
 import UserComponent from "../Components/UserComponent";
 import User from "../Models/User";
 import { users } from "../Models/mock";
+import HeaderComponent from "../Components/Header";
 
 export default function ContactsScreen() {
   return (
-    <SafeAreaView style={styles.container}>
-      <FlatList
-        data={users}
-        renderItem={({ item }) => (
-          <UserComponent value={item} avatarColor={getRandomColor()} />
-        )}
-        keyExtractor={item => item.id.toString()}
-      />
-    </SafeAreaView>
+    <>
+      <HeaderComponent value={"PHONE"} />
+      <SafeAreaView style={styles.container}>
+        <FlatList
+          data={users}
+          renderItem={({ item }) => (
+            <UserComponent value={item} avatarColor={getRandomColor()} />
+          )}
+          keyExtractor={item => item.id.toString()}
+        />
+      </SafeAreaView>
+    </>
   );
 }
 function getRandomColor() {

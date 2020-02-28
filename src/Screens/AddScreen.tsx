@@ -1,7 +1,7 @@
 import React from "react";
 import { StyleSheet, Text, View } from "react-native";
 
-export default function RecentsScreen() {
+export default function AddScreen() {
   return (
     <View style={styles.container}>
       <Text>Recent screen</Text>

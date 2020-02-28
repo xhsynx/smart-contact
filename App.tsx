@@ -4,8 +4,8 @@ import { NavigationContainer } from "@react-navigation/native";
 import { createStackNavigator } from "@react-navigation/stack";
 import { createBottomTabNavigator } from "@react-navigation/bottom-tabs";
 import ContactsScreen from "./src/Screens/ContactsScreen";
-import RecentsScreen from "./src/Screens/RecentsScreen";
-import KeypadScreen from "./src/Screens/KeypadScreen";
+import AddScreen from "./src/Screens/AddScreen";
+import SearchScreen from "./src/Screens/SearchScreen";
 import { Ionicons } from "@expo/vector-icons";
 
 const Tab = createBottomTabNavigator();
@@ -14,13 +14,14 @@ export default function App() {
   return (
     <NavigationContainer>
       <Tab.Navigator
+        initialRouteName="Contacts"
         screenOptions={({ route }) => ({
           tabBarIcon: ({ focused, color, size }) => {
             let iconName: string;
-            if (route.name === "Keypad") {
-              iconName = focused ? "md-keypad" : "md-keypad";
-            } else if (route.name === "Recents") {
-              iconName = focused ? "md-clock" : "md-clock";
+            if (route.name === "Search") {
+              iconName = focused ? "md-search" : "md-search";
+            } else if (route.name === "Add") {
+              iconName = focused ? "md-person-add" : "md-person-add";
             } else if (route.name === "Contacts") {
               iconName = focused ? "md-contacts" : "md-contacts";
             }
@@ -36,9 +37,9 @@ export default function App() {
           }
         }}
       >
-        <Tab.Screen name="Keypad" component={KeypadScreen} />
-        <Tab.Screen name="Recents" component={RecentsScreen} />
         <Tab.Screen name="Contacts" component={ContactsScreen} />
+        <Tab.Screen name="Add" component={AddScreen} />
+        <Tab.Screen name="Search" component={SearchScreen} />
       </Tab.Navigator>
     </NavigationContainer>
   );

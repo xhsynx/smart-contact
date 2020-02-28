@@ -1,10 +1,10 @@
 import React from "react";
 import { StyleSheet, Text, View } from "react-native";
 
-export default function KeypadScreen() {
+export default function SearchScreen() {
   return (
     <View style={styles.container}>
-      <Text>Keypad screen</Text>
+      <Text>Search screen</Text>
     </View>
   );
 }

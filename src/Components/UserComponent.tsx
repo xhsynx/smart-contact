@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useState } from "react";
 import {
   StyleSheet,
   Text,
@@ -6,19 +6,47 @@ import {
   Dimensions,
   View
 } from "react-native";
+import { Ionicons } from "@expo/vector-icons";
 import User from "../Models/User";
+import { Edit } from "./CollapseComponent";
 export default function UserComponent(props: any) {
+  const [userTouched, setUserTouched] = useState(false);
   let user = props.value;
   let avatarColor = props.avatarColor;
   return (
-    <TouchableOpacity style={styles.container}>
-      <View style={[styles.avatar, { backgroundColor: avatarColor }]}>
-        <Text style={{ color: "white", fontWeight: "bold", fontSize: 30 }}>
-          {user.name[0]}
-        </Text>
-      </View>
-      <Text style={styles.text}>{user.name}</Text>
-    </TouchableOpacity>
+    <>
+      <TouchableOpacity
+        style={styles.container}
+        onPress={() => {
+          setUserTouched(!userTouched);
+        }}
+      >
+        <>
+          <View style={[styles.avatar, { backgroundColor: avatarColor }]}>
+            <Text style={{ color: "white", fontWeight: "bold", fontSize: 30 }}>
+              {user.name[0]}
+            </Text>
+          </View>
+          <Text style={styles.text}>{user.name}</Text>
+        </>
+        <View style={{ marginRight: 10 }}>
+          {userTouched ? (
+            <Ionicons
+              name={"md-arrow-dropup-circle"}
+              size={24}
+              color={"#2e7d32"}
+            />
+          ) : (
+            <Ionicons
+              name={"md-arrow-dropdown-circle"}
+              size={24}
+              color={"#2e7d32"}
+            />
+          )}
+        </View>
+      </TouchableOpacity>
+      {userTouched && <Edit value={user} />}
+    </>
   );
 }
 
@@ -31,10 +59,13 @@ const styles = StyleSheet.create({
     flexDirection: "row",
     width: screenWidth,
     height: screenHeight / 14,
-    borderRadius: 75,
+    borderTopRightRadius: 20,
+    borderTopLeftRadius: 20,
     marginVertical: 1,
     borderWidth: 0.5,
-    borderColor: "#2e7d32"
+    borderBottomWidth: 0,
+    borderColor: "#2e7d32",
+    justifyContent: "space-between"
   },
   text: {
     color: "white"
