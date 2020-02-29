@@ -14,7 +14,7 @@ import HeaderComponent from "../Components/HeaderComponent";
 export default function ContactsScreen() {
   return (
     <>
-      <HeaderComponent value={"PHONE"} />
+      <HeaderComponent value={"Phone"} />
       <SafeAreaView style={styles.container}>
         <FlatList
           data={users}

@@ -2,7 +2,7 @@ import React from "react";
 import { StyleSheet, Text, Dimensions, View } from "react-native";
 import User from "../Models/User";
 import { Ionicons } from "@expo/vector-icons";
-function Edit(props: any) {
+export default function CollapseComponent(props: any) {
   let user = props.value;
   return (
     <View style={[styles.container]}>
@@ -22,6 +22,7 @@ function Edit(props: any) {
           justifyContent: "space-around"
         }}
       >
+        <Ionicons name={"md-call"} size={24} color={"#2e7d32"} />
         <Ionicons name={"md-information-circle"} size={24} color={"#2e7d32"} />
         <Ionicons name={"md-create"} size={24} color={"#2e7d32"} />
         <Ionicons name={"md-trash"} size={24} color={"#2e7d32"} />
@@ -46,5 +47,3 @@ const styles = StyleSheet.create({
     justifyContent: "space-around"
   }
 });
-
-export { Edit };

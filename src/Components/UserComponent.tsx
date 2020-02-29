@@ -8,7 +8,7 @@ import {
 } from "react-native";
 import { Ionicons } from "@expo/vector-icons";
 import User from "../Models/User";
-import { Edit } from "./CollapseComponent";
+import CollapseComponent from "./CollapseComponent";
 export default function UserComponent(props: any) {
   const [userTouched, setUserTouched] = useState(false);
   let user = props.value;
@@ -45,7 +45,7 @@ export default function UserComponent(props: any) {
           )}
         </View>
       </TouchableOpacity>
-      {userTouched && <Edit value={user} />}
+      {userTouched && <CollapseComponent value={user} />}
     </>
   );
 }

@@ -19,14 +19,26 @@ export default function App() {
           tabBarIcon: ({ focused, color, size }) => {
             let iconName: string;
             if (route.name === "Search") {
-              iconName = focused ? "md-search" : "md-search";
-            } else if (route.name === "Add") {
-              iconName = focused ? "md-person-add" : "md-person-add";
+              iconName = focused ? "md-information" : "md-information";
             } else if (route.name === "Contacts") {
               iconName = focused ? "md-contacts" : "md-contacts";
             }
             // You can return any component that you like here!
-            return <Ionicons name={iconName} size={size} color={color} />;
+
+            return (
+              <View
+                style={{
+                  borderWidth: 1,
+                  borderColor: "#2e7d32",
+                  borderRadius: 50,
+                  width: 30,
+                  height: 30,
+                  alignItems: "center"
+                }}
+              >
+                <Ionicons name={iconName} size={size} color={color} />
+              </View>
+            );
           }
         })}
         tabBarOptions={{
@@ -38,7 +50,7 @@ export default function App() {
         }}
       >
         <Tab.Screen name="Contacts" component={ContactsScreen} />
-        <Tab.Screen name="Add" component={AddScreen} />
+
         <Tab.Screen name="Search" component={SearchScreen} />
       </Tab.Navigator>
     </NavigationContainer>
