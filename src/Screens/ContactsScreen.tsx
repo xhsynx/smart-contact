@@ -9,7 +9,7 @@ import {
 import UserComponent from "../Components/UserComponent";
 import User from "../Models/User";
 import { users } from "../Models/mock";
-import HeaderComponent from "../Components/Header";
+import HeaderComponent from "../Components/HeaderComponent";
 
 export default function ContactsScreen() {
   return (
