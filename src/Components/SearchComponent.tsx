@@ -1,6 +1,7 @@
 import React, { useState } from "react";
 import { StyleSheet, TextInput, Dimensions, View } from "react-native";
 import { Ionicons } from "@expo/vector-icons";
+import User from "../Models/User";
 
 export default function SearchComponent(props: any) {
   const [value, onChangeText] = useState();
@@ -19,6 +20,11 @@ export default function SearchComponent(props: any) {
   );
 }
 
+const searchFilter = (users: User[], searchTerm: string) => {
+  users.filter(
+    user => user.name.toLowerCase().indexOf(searchTerm.toLowerCase()) !== -1
+  );
+};
 const screenHeight = Math.round(Dimensions.get("window").height);
 const screenWidth = Math.round(Dimensions.get("window").width);
 const styles = StyleSheet.create({

@@ -1,10 +1,10 @@
 import React from "react";
 import { StyleSheet, Text, View } from "react-native";
 
-export default function AddScreen() {
+export default function AppInfoScreen() {
   return (
     <View style={styles.container}>
-      <Text>Recent screen</Text>
+      <Text style={{ color: "#2e7d32" }}>App info screen</Text>
     </View>
   );
 }
@@ -12,7 +12,7 @@ export default function AddScreen() {
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    backgroundColor: "#fff",
+    backgroundColor: "black",
     alignItems: "center",
     justifyContent: "center"
   }

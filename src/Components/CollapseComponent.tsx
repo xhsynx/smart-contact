@@ -1,8 +1,17 @@
 import React from "react";
-import { StyleSheet, Text, Dimensions, View } from "react-native";
+import {
+  StyleSheet,
+  Text,
+  Dimensions,
+  View,
+  TouchableOpacity
+} from "react-native";
+import { useNavigation } from "@react-navigation/native";
 import User from "../Models/User";
 import { Ionicons } from "@expo/vector-icons";
+import { remove } from "../Services/Firebase";
 export default function CollapseComponent(props: any) {
+  const navigation = useNavigation();
   let user = props.value;
   return (
     <View style={[styles.container]}>
@@ -25,7 +34,16 @@ export default function CollapseComponent(props: any) {
         <Ionicons name={"md-call"} size={24} color={"#2e7d32"} />
         <Ionicons name={"md-information-circle"} size={24} color={"#2e7d32"} />
         <Ionicons name={"md-create"} size={24} color={"#2e7d32"} />
-        <Ionicons name={"md-trash"} size={24} color={"#2e7d32"} />
+        <TouchableOpacity
+          onPress={() => {
+            console.log(user);
+            remove(user).then(() => {
+              navigation.goBack();
+            });
+          }}
+        >
+          <Ionicons name={"md-trash"} size={24} color={"#2e7d32"} />
+        </TouchableOpacity>
       </View>
     </View>
   );

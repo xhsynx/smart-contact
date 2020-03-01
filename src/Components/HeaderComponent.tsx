@@ -19,16 +19,6 @@ export default function HeaderComponent(props: any) {
       </Text>
       <Ionicons name={"md-call"} size={30} color={"#2e7d32"} />
       <SearchComponent value={props.search} />
-
-      <TouchableOpacity
-        style={{ alignItems: "center" }}
-        onPress={() => {
-          setModalVisible(!modalVisible);
-        }}
-      >
-        <Ionicons name={"md-person-add"} size={30} color={"#2e7d32"} />
-        <Text style={{ fontSize: 20, color: "#2e7d32" }}>Add New</Text>
-      </TouchableOpacity>
       {modalVisible && <AddUserComponent value={modalVisible} />}
     </View>
   );
@@ -36,7 +26,7 @@ export default function HeaderComponent(props: any) {
 
 const styles = StyleSheet.create({
   container: {
-    flex: 0.6,
+    flex: 0.5,
     backgroundColor: "black",
     alignItems: "center",
     justifyContent: "center"

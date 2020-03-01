@@ -4,8 +4,8 @@ import { NavigationContainer } from "@react-navigation/native";
 import { createStackNavigator } from "@react-navigation/stack";
 import { createBottomTabNavigator } from "@react-navigation/bottom-tabs";
 import ContactsScreen from "./src/Screens/ContactsScreen";
-import AddScreen from "./src/Screens/AddScreen";
-import SearchScreen from "./src/Screens/SearchScreen";
+import AddUserScreen from "./src/Screens/AddUserScreen";
+import AppInfoScreen from "./src/Screens/AppInfoScreen";
 import { Ionicons } from "@expo/vector-icons";
 
 const Tab = createBottomTabNavigator();
@@ -18,10 +18,12 @@ export default function App() {
         screenOptions={({ route }) => ({
           tabBarIcon: ({ focused, color, size }) => {
             let iconName: string;
-            if (route.name === "Search") {
-              iconName = focused ? "md-information" : "md-information";
+            if (route.name === "AddUser") {
+              iconName = focused ? "md-person-add" : "md-person-add";
             } else if (route.name === "Contacts") {
               iconName = focused ? "md-contacts" : "md-contacts";
+            } else if (route.name === "Info") {
+              iconName = focused ? "md-information" : "md-information";
             }
             // You can return any component that you like here!
 
@@ -50,8 +52,8 @@ export default function App() {
         }}
       >
         <Tab.Screen name="Contacts" component={ContactsScreen} />
-
-        <Tab.Screen name="Search" component={SearchScreen} />
+        <Tab.Screen name="AddUser" component={AddUserScreen} />
+        <Tab.Screen name="Info" component={AppInfoScreen} />
       </Tab.Navigator>
     </NavigationContainer>
   );

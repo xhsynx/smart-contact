@@ -1,30 +1,36 @@
 import { firebase } from "../Services/Configs/FirebaseConfig";
 import User from "../Models/User";
 
-const ref = firebase.database().ref("/root/contacts/");
-function select(user: User) {
+const select = () => {
+  const ref = firebase.database().ref("/root/contacts/");
   let users: User[] = new Array();
   ref.on("value", snapshot => {
-    users.push(snapshot.val());
+    if (snapshot.val()) {
+      Object.keys(snapshot.val()).map(key => {
+        users.push(snapshot.val()[key]);
+      });
+    }
   });
+
   return users;
-}
-function add(user: User) {
-  ref
+};
+
+const add = async (user: User) => {
+  const ref = firebase.database().ref("/root/contacts/");
+  await ref
     .push(user)
     .then(snapshot => {
-      console.log("User saved on firebase succesfully!");
-      this.user.id = snapshot.key;
+      user.id = snapshot.key;
       update(user);
-      return true;
+      console.log("User saved on firebase succesfully!");
     })
     .catch(() => {
       console.log("User could not be saved on firebase!");
-      return false;
     });
-}
-function update(user: User) {
-  ref
+};
+const update = async (user: User) => {
+  const ref = firebase.database().ref("/root/contacts/" + user.id);
+  await ref
     .set({
       id: user.id,
       name: user.name,
@@ -39,23 +45,18 @@ function update(user: User) {
       console.log("User could not be updated on firebase!");
       return false;
     });
-}
-function remove(id: string) {
-  ref
-    .child("")
-    .orderByChild("id")
-    .equalTo(id)
-    .on("value", snapshot => {
-      ref.child(Object.keys(snapshot.val())[0]).remove();
-    });
-  this.select();
-}
-function getChildrenCount() {
+};
+const remove = async (user: User) => {
+  const ref = firebase.database().ref("/root/contacts/" + user.id);
+  ref.remove();
+};
+const getChildrenCount = () => {
+  const ref = firebase.database().ref("/root/contacts/");
   let childrenCount: number;
   ref.once("value").then(snapshot => {
     childrenCount = snapshot.numChildren();
   });
   return childrenCount;
-}
+};
 
 export { select, add, remove, update, getChildrenCount };
