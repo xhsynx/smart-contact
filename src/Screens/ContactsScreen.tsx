@@ -1,32 +1,32 @@
-import React, { useState, useEffect } from "react";
-import { StyleSheet, FlatList, SafeAreaView } from "react-native";
+import React, { useState, useEffect, useRef } from "react";
+import { StyleSheet, FlatList, SafeAreaView, Text } from "react-native";
 import UserComponent from "../Components/UserComponent";
-
 import HeaderComponent from "../Components/HeaderComponent";
 import { select } from "../Services/Firebase";
-import User from "../Models/User";
+import { useIsFocused } from "@react-navigation/native";
 
-export default function ContactsScreen({ navigation }) {
+export default function ContactsScreen() {
   const [users, setUsers] = useState([]);
+  const isFocused = useIsFocused();
   useEffect(() => {
-    const unsubscribe = navigation.addListener("focus", () => {
-      setUsers(select());
-    });
-    return unsubscribe;
-  }, [navigation]);
+    setUsers(select());
+  }, [users.length]);
 
   return (
     <>
       <HeaderComponent value={"Phone"} />
-
       <SafeAreaView style={styles.container}>
-        <FlatList
-          data={users}
-          renderItem={({ item }) => (
-            <UserComponent value={item} avatarColor={getRandomColor()} />
-          )}
-          keyExtractor={(item, index) => index.toString()}
-        />
+        {isFocused ? (
+          <FlatList
+            data={users}
+            renderItem={({ item }) => (
+              <UserComponent value={item} avatarColor={getRandomColor()} />
+            )}
+            keyExtractor={(item, index) => index.toString()}
+          />
+        ) : (
+          <Text>Loading...</Text>
+        )}
       </SafeAreaView>
     </>
   );
@@ -40,6 +40,14 @@ const getRandomColor = () => {
   }
   return color;
 };
+
+function usePrevious(value: any) {
+  const ref = useRef();
+  useEffect(() => {
+    ref.current = value;
+  });
+  return ref.current;
+}
 
 const styles = StyleSheet.create({
   container: {

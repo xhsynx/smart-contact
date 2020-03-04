@@ -38,7 +38,7 @@ export default function CollapseComponent(props: any) {
           onPress={() => {
             console.log(user);
             remove(user).then(() => {
-              navigation.goBack();
+              navigation.navigate("Contacts", { isRemoved: true });
             });
           }}
         >
