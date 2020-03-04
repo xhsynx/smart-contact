@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useState } from "react";
 import {
   StyleSheet,
   Text,
@@ -13,6 +13,7 @@ import { remove } from "../Services/Firebase";
 export default function CollapseComponent(props: any) {
   const navigation = useNavigation();
   let user = props.value;
+
   return (
     <View style={[styles.container]}>
       <View
@@ -36,7 +37,6 @@ export default function CollapseComponent(props: any) {
         <Ionicons name={"md-create"} size={24} color={"#2e7d32"} />
         <TouchableOpacity
           onPress={() => {
-            console.log(user);
             remove(user).then(() => {
               navigation.navigate("Contacts", { isRemoved: true });
             });

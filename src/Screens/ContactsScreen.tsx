@@ -5,12 +5,18 @@ import HeaderComponent from "../Components/HeaderComponent";
 import { select } from "../Services/Firebase";
 import { useIsFocused } from "@react-navigation/native";
 
-export default function ContactsScreen() {
+export default function ContactsScreen({ navigation, route }) {
   const [users, setUsers] = useState([]);
+  const [isRemoved, setIsRemoved] = useState(route.params?.isRemoved);
   const isFocused = useIsFocused();
+  if (isRemoved) {
+    setUsers(select());
+    setIsRemoved(!isRemoved);
+  }
   useEffect(() => {
     setUsers(select());
-  }, [users.length]);
+    setIsRemoved(false);
+  }, [users.length, isRemoved]);
 
   return (
     <>
