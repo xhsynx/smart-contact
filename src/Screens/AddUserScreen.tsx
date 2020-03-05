@@ -93,11 +93,11 @@ export default function AddUserScreen({ navigation }) {
             user.email = email;
 
             if (user.name && user.email && user.phone) {
-              add(user).then(() => {
-                setName(null);
-                setPhone(null);
-                setEmail(null);
-                navigation.navigate("Contacts", { user: user });
+              add(user).then(usr => {
+                setName("");
+                setEmail("");
+                setPhone("");
+                navigation.navigate("Contacts", { addedUser: usr });
               });
             } else {
               Alert.alert("Warning!", "All fields are required!", [

@@ -12,7 +12,7 @@ import { Ionicons } from "@expo/vector-icons";
 import { remove } from "../Services/Firebase";
 export default function CollapseComponent(props: any) {
   const navigation = useNavigation();
-  let user = props.value;
+  const [user, setUser] = useState(props.user);
 
   return (
     <View style={[styles.container]}>
@@ -38,7 +38,7 @@ export default function CollapseComponent(props: any) {
         <TouchableOpacity
           onPress={() => {
             remove(user).then(() => {
-              navigation.navigate("Contacts", { isRemoved: true });
+              navigation.navigate("Contacts", { removedUser: user });
             });
           }}
         >

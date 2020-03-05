@@ -11,7 +11,7 @@ import User from "../Models/User";
 import CollapseComponent from "./CollapseComponent";
 export default function UserComponent(props: any) {
   const [userTouched, setUserTouched] = useState(false);
-  let user = props.value;
+  const [user, setUser] = useState(props.user);
   let avatarColor = props.avatarColor;
   return (
     <>
@@ -45,7 +45,7 @@ export default function UserComponent(props: any) {
           )}
         </View>
       </TouchableOpacity>
-      {userTouched && <CollapseComponent value={user} />}
+      {userTouched && <CollapseComponent user={user} />}
     </>
   );
 }

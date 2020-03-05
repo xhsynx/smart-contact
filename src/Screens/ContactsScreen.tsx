@@ -1,38 +1,54 @@
 import React, { useState, useEffect, useRef } from "react";
-import { StyleSheet, FlatList, SafeAreaView, Text } from "react-native";
+import {
+  StyleSheet,
+  FlatList,
+  SafeAreaView,
+  Text,
+  View,
+  TextInput,
+  Dimensions
+} from "react-native";
 import UserComponent from "../Components/UserComponent";
-import HeaderComponent from "../Components/HeaderComponent";
 import { select } from "../Services/Firebase";
-import { useIsFocused } from "@react-navigation/native";
-
+import { Ionicons } from "@expo/vector-icons";
 export default function ContactsScreen({ navigation, route }) {
-  const [users, setUsers] = useState([]);
-  const [isRemoved, setIsRemoved] = useState(route.params?.isRemoved);
-  const isFocused = useIsFocused();
-  if (isRemoved) {
-    setUsers(select());
-    setIsRemoved(!isRemoved);
-  }
+  const [search, setSearch] = useState("");
+
   useEffect(() => {
-    setUsers(select());
-    setIsRemoved(false);
-  }, [users.length, isRemoved]);
+    console.log(search);
+  }, []);
 
   return (
     <>
-      <HeaderComponent value={"Phone"} />
+      <View style={styles.header}>
+        <Text style={{ fontWeight: "bold", fontSize: 20, color: "#2e7d32" }}>
+          Phone
+        </Text>
+        <Ionicons name={"md-call"} size={30} color={"#2e7d32"} />
+        <View style={styles.search}>
+          <TextInput
+            autoFocus={false}
+            placeholder="Search"
+            placeholderTextColor="grey"
+            onChangeText={text => {
+              setSearch(text);
+            }}
+            value={search}
+            style={{ color: "grey" }}
+          ></TextInput>
+          <Ionicons name={"md-search"} size={24} color={"#2e7d32"} />
+        </View>
+      </View>
       <SafeAreaView style={styles.container}>
-        {isFocused ? (
-          <FlatList
-            data={users}
-            renderItem={({ item }) => (
-              <UserComponent value={item} avatarColor={getRandomColor()} />
-            )}
-            keyExtractor={(item, index) => index.toString()}
-          />
-        ) : (
-          <Text>Loading...</Text>
-        )}
+        <FlatList
+          data={select().filter(
+            u => u.name.toLowerCase().indexOf(search.toLowerCase()) !== -1
+          )}
+          renderItem={({ item }) => (
+            <UserComponent user={item} avatarColor={getRandomColor()} />
+          )}
+          keyExtractor={item => item.id.toString()}
+        />
       </SafeAreaView>
     </>
   );
@@ -46,20 +62,32 @@ const getRandomColor = () => {
   }
   return color;
 };
-
-function usePrevious(value: any) {
-  const ref = useRef();
-  useEffect(() => {
-    ref.current = value;
-  });
-  return ref.current;
-}
-
+const screenHeight = Math.round(Dimensions.get("window").height);
+const screenWidth = Math.round(Dimensions.get("window").width);
 const styles = StyleSheet.create({
   container: {
     flex: 1,
     backgroundColor: "black",
     alignItems: "center",
     justifyContent: "center"
+  },
+  header: {
+    flex: 0.5,
+    backgroundColor: "black",
+    alignItems: "center",
+    justifyContent: "center"
+  },
+  search: {
+    width: screenWidth / 2,
+    height: screenHeight / 24,
+    marginVertical: 10,
+    borderRadius: 50,
+    borderWidth: 2,
+    borderColor: "#2e7d32",
+    backgroundColor: "black",
+    flexDirection: "row",
+    justifyContent: "space-between",
+    alignItems: "center",
+    padding: 5
   }
 });

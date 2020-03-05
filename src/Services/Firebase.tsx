@@ -19,14 +19,15 @@ const add = async (user: User) => {
   const ref = firebase.database().ref("/root/contacts/");
   await ref
     .push(user)
-    .then(snapshot => {
+    .then(async snapshot => {
       user.id = snapshot.key;
-      update(user);
+      await update(user);
       console.log("User saved on firebase succesfully!");
     })
     .catch(() => {
       console.log("User could not be saved on firebase!");
     });
+  return user;
 };
 const update = async (user: User) => {
   const ref = firebase.database().ref("/root/contacts/" + user.id);
@@ -39,21 +40,30 @@ const update = async (user: User) => {
     })
     .then(() => {
       console.log("User updated on firebase succesfully!");
-      return true;
     })
     .catch(() => {
       console.log("User could not be updated on firebase!");
-      return false;
     });
 };
 const remove = async (user: User) => {
+  if (user.id === null || user.id === undefined) {
+    console.log("Contact could not be deleted.");
+    return;
+  }
   const ref = firebase.database().ref("/root/contacts/" + user.id);
-  ref.remove();
+  await ref
+    .remove()
+    .then(() => {
+      console.log("Contact deleted successfully.");
+    })
+    .catch(error => {
+      console.log("Contact could not be deleted.");
+    });
 };
-const getChildrenCount = () => {
+const getChildrenCount = async () => {
   const ref = firebase.database().ref("/root/contacts/");
   let childrenCount: number;
-  ref.once("value").then(snapshot => {
+  await ref.once("value").then(snapshot => {
     childrenCount = snapshot.numChildren();
   });
   return childrenCount;
