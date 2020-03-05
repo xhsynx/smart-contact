@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import {
   StyleSheet,
   TextInput,
@@ -16,6 +16,7 @@ export default function AddUserScreen({ navigation }) {
   const [name, setName] = useState();
   const [phone, setPhone] = useState();
   const [email, setEmail] = useState();
+
   return (
     <View
       style={{
@@ -97,6 +98,7 @@ export default function AddUserScreen({ navigation }) {
                 setName("");
                 setEmail("");
                 setPhone("");
+
                 navigation.navigate("Contacts", { addedUser: usr });
               });
             } else {

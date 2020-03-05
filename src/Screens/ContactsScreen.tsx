@@ -14,10 +14,6 @@ import { Ionicons } from "@expo/vector-icons";
 export default function ContactsScreen({ navigation, route }) {
   const [search, setSearch] = useState("");
 
-  useEffect(() => {
-    console.log(search);
-  }, []);
-
   return (
     <>
       <View style={styles.header}>
