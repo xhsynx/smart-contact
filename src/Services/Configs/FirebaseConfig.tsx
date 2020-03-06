@@ -1,14 +1,13 @@
 import firebase from "firebase";
 // Your web app's Firebase configuration
 var firebaseConfig = {
-  apiKey: "AIzaSyBzMuSxYM17Ek5D4KstxHjxvPVA8dET-QE",
-  authDomain: "contacts-react-native-5025e.firebaseapp.com",
-  databaseURL: "https://contacts-react-native-5025e.firebaseio.com",
-  projectId: "contacts-react-native-5025e",
-  storageBucket: "contacts-react-native-5025e.appspot.com",
-  messagingSenderId: "174985784238",
-  appId: "1:174985784238:web:289b498359569e9a3b763f",
-  measurementId: "G-DS98EZV0VV"
+  apiKey: "AIzaSyA1ON6k60IQ4QmersIHBRR2U5LRyJHx5_4",
+  authDomain: "contacts-react-native-7e5c9.firebaseapp.com",
+  databaseURL: "https://contacts-react-native-7e5c9.firebaseio.com",
+  projectId: "contacts-react-native-7e5c9",
+  storageBucket: "contacts-react-native-7e5c9.appspot.com",
+  messagingSenderId: "227875272698",
+  appId: "1:227875272698:web:4ab17525f4ced32ff6d643"
 };
 // Initialize Firebase
 firebase.initializeApp(firebaseConfig);
