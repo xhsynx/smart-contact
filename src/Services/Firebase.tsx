@@ -1,17 +1,16 @@
 import { firebase } from "../Services/Configs/FirebaseConfig";
 import User from "../Models/User";
 
-const select = () => {
+const select = async () => {
   const ref = firebase.database().ref("/root/contacts/");
   let users: User[] = new Array();
-  ref.on("value", snapshot => {
+  await ref.once("value", snapshot => {
     if (snapshot.val()) {
       Object.keys(snapshot.val()).map(key => {
         users.push(snapshot.val()[key]);
       });
     }
   });
-
   return users;
 };
 
@@ -44,6 +43,7 @@ const update = async (user: User) => {
     .catch(() => {
       console.log("User could not be updated on firebase!");
     });
+  return user;
 };
 const remove = async (user: User) => {
   if (user.id === null || user.id === undefined) {
@@ -59,6 +59,7 @@ const remove = async (user: User) => {
     .catch(error => {
       console.log("Contact could not be deleted.");
     });
+  return user;
 };
 const getChildrenCount = async () => {
   const ref = firebase.database().ref("/root/contacts/");

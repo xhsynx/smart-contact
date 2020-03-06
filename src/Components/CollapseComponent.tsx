@@ -16,9 +16,9 @@ import { remove, update } from "../Services/Firebase";
 export default function CollapseComponent(props: any) {
   const navigation = useNavigation();
   const [user, setUser] = useState(props.user);
-  const [name, setName] = useState();
-  const [phone, setPhone] = useState();
-  const [email, setEmail] = useState();
+  const [name, setName] = useState(props.user.name);
+  const [phone, setPhone] = useState(props.user.phone);
+  const [email, setEmail] = useState(props.user.email);
   const [modalVisible, setModalVisible] = useState(false);
 
   if (modalVisible) {
@@ -62,7 +62,6 @@ export default function CollapseComponent(props: any) {
             <Ionicons name={"md-person"} size={24} color={"#2e7d32"} />
             <TextInput
               autoFocus={false}
-              placeholder={user.name}
               placeholderTextColor="grey"
               onChangeText={text => setName(text)}
               value={name}
@@ -77,7 +76,6 @@ export default function CollapseComponent(props: any) {
             <Ionicons name={"md-call"} size={24} color={"#2e7d32"} />
             <TextInput
               autoFocus={false}
-              placeholder={user.phone}
               placeholderTextColor="grey"
               onChangeText={text => setPhone(text)}
               value={phone}
@@ -92,7 +90,6 @@ export default function CollapseComponent(props: any) {
             <Ionicons name={"md-mail"} size={24} color={"#2e7d32"} />
             <TextInput
               autoFocus={false}
-              placeholder={user.email}
               placeholderTextColor="grey"
               onChangeText={text => setEmail(text)}
               value={email}
@@ -125,10 +122,15 @@ export default function CollapseComponent(props: any) {
                   updatedUser.email &&
                   updatedUser.phone
                 ) {
-                  update(updatedUser).then(() => {
-                    setName("");
-                    setEmail("");
-                    setPhone("");
+                  update(updatedUser).then(usr => {
+                    navigation.navigate("Contacts", {
+                      editedContact: {
+                        id: usr.id,
+                        name: usr.name,
+                        phone: usr.phone,
+                        email: usr.email
+                      }
+                    });
                     setModalVisible(!modalVisible);
                   });
                 } else {
@@ -200,8 +202,8 @@ export default function CollapseComponent(props: any) {
           justifyContent: "space-around"
         }}
       >
-        <Ionicons name={"md-call"} size={24} color={"#2e7d32"} />
-        <Ionicons name={"md-information-circle"} size={24} color={"#2e7d32"} />
+        {/* <Ionicons name={"md-call"} size={24} color={"#2e7d32"} />
+        <Ionicons name={"md-information-circle"} size={24} color={"#2e7d32"} /> */}
         <TouchableOpacity
           onPress={() => {
             setModalVisible(!modalVisible);
@@ -212,8 +214,15 @@ export default function CollapseComponent(props: any) {
 
         <TouchableOpacity
           onPress={() => {
-            remove(user).then(() => {
-              navigation.navigate("Contacts", { removedUser: user });
+            remove(user).then(usr => {
+              navigation.navigate("Contacts", {
+                removedContact: {
+                  id: usr.id,
+                  name: usr.name,
+                  phone: usr.phone,
+                  email: usr.email
+                }
+              });
             });
           }}
         >

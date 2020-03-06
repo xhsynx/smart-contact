@@ -1,15 +1,32 @@
 import React from "react";
-import { StyleSheet, Text, View } from "react-native";
+import {
+  StyleSheet,
+  Text,
+  View,
+  Linking,
+  TouchableOpacity
+} from "react-native";
 
 export default function AppInfoScreen() {
   return (
     <View style={styles.container}>
       <Text style={{ fontSize: 50 }}>😊</Text>
-      <Text style={{ color: "#2e7d32" }}>Download GitHub Link</Text>
-      <Text style={{ fontSize: 50 }}>⤵️</Text>
-      <Text style={{ color: "#2e7d32" }}>
-        https://github.com/xhsynx/smart-contact
-      </Text>
+      <Text style={{ fontSize: 50 }}>👇🏻</Text>
+
+      <TouchableOpacity
+        style={{
+          alignItems: "center"
+        }}
+        onPress={() => {
+          Linking.openURL("https://github.com/xhsynx/smart-contact");
+        }}
+      >
+        <Text style={{ color: "#2e7d32" }}>GitHub Link</Text>
+        <Text style={{ color: "#2e7d32", fontSize: 10 }}>version 1.0</Text>
+        <Text style={{ color: "#2e7d32", fontSize: 10 }}>
+          contact info: huseyin.akcicek@outlook.com
+        </Text>
+      </TouchableOpacity>
     </View>
   );
 }

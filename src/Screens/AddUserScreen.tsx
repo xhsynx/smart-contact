@@ -99,7 +99,14 @@ export default function AddUserScreen({ navigation }) {
                 setEmail("");
                 setPhone("");
 
-                navigation.navigate("Contacts", { addedUser: usr });
+                navigation.navigate("Contacts", {
+                  addedContact: {
+                    id: usr.id,
+                    name: usr.name,
+                    phone: usr.phone,
+                    email: usr.email
+                  }
+                });
               });
             } else {
               Alert.alert("Warning!", "All fields are required!", [

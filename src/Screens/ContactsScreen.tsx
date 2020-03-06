@@ -13,6 +13,25 @@ import { select } from "../Services/Firebase";
 import { Ionicons } from "@expo/vector-icons";
 export default function ContactsScreen({ navigation, route }) {
   const [search, setSearch] = useState("");
+  const [contacts, setcontacts] = useState([]);
+
+  if (route.params?.addedContact) {
+    setcontacts([...contacts, route.params.addedContact]);
+    route.params.addedContact = null;
+  }
+  if (route.params?.removedContact) {
+    setcontacts([]);
+    route.params.removedContact = null;
+  }
+  if (route.params?.editedContact) {
+    setcontacts([]);
+    route.params.editedContact = null;
+  }
+  useEffect(() => {
+    select().then(u => {
+      setcontacts(u);
+    });
+  }, [contacts.length]);
 
   return (
     <>
@@ -30,21 +49,27 @@ export default function ContactsScreen({ navigation, route }) {
               setSearch(text);
             }}
             value={search}
-            style={{ color: "grey" }}
+            style={{
+              color: "grey",
+              width: screenWidth / 2,
+              height: screenHeight / 20
+            }}
           ></TextInput>
           <Ionicons name={"md-search"} size={24} color={"#2e7d32"} />
         </View>
       </View>
       <SafeAreaView style={styles.container}>
-        <FlatList
-          data={select().filter(
-            u => u.name.toLowerCase().indexOf(search.toLowerCase()) !== -1
-          )}
-          renderItem={({ item }) => (
-            <UserComponent user={item} avatarColor={getRandomColor()} />
-          )}
-          keyExtractor={item => item.id.toString()}
-        />
+        {contacts.length > 0 && (
+          <FlatList
+            data={contacts?.filter(
+              u => u?.name?.toLowerCase().indexOf(search.toLowerCase()) !== -1
+            )}
+            renderItem={({ item }) => (
+              <UserComponent user={item} avatarColor={getRandomColor()} />
+            )}
+            keyExtractor={item => item.id.toString()}
+          />
+        )}
       </SafeAreaView>
     </>
   );
@@ -74,8 +99,8 @@ const styles = StyleSheet.create({
     justifyContent: "center"
   },
   search: {
-    width: screenWidth / 2,
-    height: screenHeight / 24,
+    width: screenWidth / 1.5,
+    height: screenHeight / 20,
     marginVertical: 10,
     borderRadius: 50,
     borderWidth: 2,
